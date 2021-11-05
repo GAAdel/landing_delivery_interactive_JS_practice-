@@ -46,13 +46,17 @@ buttonOut.addEventListener('click', () => {
 logInForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  const user = {
-    login: inputLogin.value,
-    password: inputPassword.value
-  }
-
+  if (inputLogin.value != '' && inputPassword.value != '') {
+    const user = {
+      login: inputLogin.value,
+      password: inputPassword.value
+    }
     localStorage.setItem('user', JSON.stringify(user));
     login(user);
+
+  } else {
+    return alert("Пароль или логин не введены!");
+  }
 
 })
 
