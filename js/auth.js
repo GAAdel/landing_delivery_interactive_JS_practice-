@@ -63,6 +63,3 @@ logInForm.addEventListener('submit', (event) => {
 if (localStorage.getItem('user')) {
   login(JSON.parse(localStorage.getItem('user')));
 }
-
-
-// console.log(logInForm);
