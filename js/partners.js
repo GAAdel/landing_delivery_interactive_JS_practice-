@@ -1,17 +1,18 @@
 const cardsRestaurants = document.querySelector(".cards-restaurants");
 
 const renderItems = (data) => {
-  data.forEach(
-    ({ image, kitchen, name, price, products, stars, time_of_delivery }) => {
-      const a = document.createElement("a");
+  data.forEach((item) => {
+    const { image, kitchen, name, price, products, stars, time_of_delivery } =
+      item;
+    const a = document.createElement("a");
 
-      a.setAttribute("href", "/restaurant.html");
-      a.classList.add("card");
-      a.classList.add("card-restaurant");
+    a.setAttribute("href", "/restaurant.html");
+    a.classList.add("card");
+    a.classList.add("card-restaurant");
 
-      a.dataset.products = products;
+    a.dataset.products = products;
 
-      a.innerHTML = `
+    a.innerHTML = `
       <img
         src="${image}"
         alt="${name}"
@@ -30,9 +31,15 @@ const renderItems = (data) => {
       </div>
     `;
 
-      cardsRestaurants.append(a);
-    }
-  );
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      localStorage.setItem("restaurant", JSON.stringify(item));
+      window.location.href = "/restaurant.html";
+    });
+
+    cardsRestaurants.append(a);
+  });
 };
 
 fetch("https://delivery-3087b-default-rtdb.firebaseio.com/db/partners.json")
