@@ -35,7 +35,8 @@ const renderItems = (data) => {
       e.preventDefault();
 
       localStorage.setItem("restaurant", JSON.stringify(item));
-      window.location.href = "/restaurant.html";
+      window.location.href =
+        "landing_delivery_interactive_JS_practice/restaurant.html";
     });
 
     cardsRestaurants.append(a);
