@@ -1,8 +1,16 @@
 const cardsMenu = document.querySelector(".cards-menu");
 
 const changeTitle = (restaurant) => {
+  console.log(restaurant);
   const restaurantTitle = document.querySelector(".restaurant-title");
+  const restaurantRating = document.querySelector(".rating");
+  const restaurantPrice = document.querySelector(".price");
+  const restaurantCategory = document.querySelector(".category");
+
   restaurantTitle.textContent = restaurant.name;
+  restaurantRating.textContent = restaurant.stars;
+  restaurantPrice.textContent = restaurant.price;
+  restaurantCategory.textContent = restaurant.kitchen;
 };
 
 const renderItems = (data) => {
