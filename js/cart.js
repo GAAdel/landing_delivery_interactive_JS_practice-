@@ -4,6 +4,7 @@ const cart = () => {
   const close = modalCart.querySelector(".close");
   const body = modalCart.querySelector(".modal-body");
   const buttonSend = modalCart.querySelector(".button-primary");
+  const buttonCancel = modalCart.querySelector(".clear-cart");
 
   const resetCart = () => {
     body.innerHTML = "";
@@ -85,6 +86,10 @@ const cart = () => {
       .catch((e) => {
         console.error(e);
       });
+  });
+
+  buttonCancel.addEventListener("click", () => {
+    resetCart();
   });
 
   buttonCart.addEventListener("click", () => {
