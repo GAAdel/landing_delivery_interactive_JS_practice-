@@ -1,24 +1,43 @@
-const cardsMenu = document.querySelector(".cards-menu");
+const menu = () => {
+  const cardsMenu = document.querySelector(".cards-menu");
 
-const changeTitle = (restaurant) => {
-  console.log(restaurant);
-  const restaurantTitle = document.querySelector(".restaurant-title");
-  const restaurantRating = document.querySelector(".rating");
-  const restaurantPrice = document.querySelector(".price");
-  const restaurantCategory = document.querySelector(".category");
+  const cartArray = localStorage.getItem("cart")
+    ? JSON.parse(localStorage.getItem("cart"))
+    : [];
 
-  restaurantTitle.textContent = restaurant.name;
-  restaurantRating.textContent = restaurant.stars;
-  restaurantPrice.textContent = restaurant.price;
-  restaurantCategory.textContent = restaurant.kitchen;
-};
+  const changeTitle = (restaurant) => {
+    const restaurantTitle = document.querySelector(".restaurant-title");
+    const restaurantRating = document.querySelector(".rating");
+    const restaurantPrice = document.querySelector(".price");
+    const restaurantCategory = document.querySelector(".category");
 
-const renderItems = (data) => {
-  data.forEach(({ description, id, image, name, price }) => {
-    const card = document.createElement("div");
+    restaurantTitle.textContent = restaurant.name;
+    restaurantRating.textContent = restaurant.stars;
+    restaurantPrice.textContent = restaurant.price;
+    restaurantCategory.textContent = restaurant.kitchen;
+  };
 
-    card.classList.add("card");
-    card.innerHTML = `
+  const addToCart = (cartItem) => {
+    if (cartArray.some((item) => item.id === cartItem.id)) {
+      cartArray.map((item) => {
+        if (item.id === cartItem.id) {
+          item.count++;
+        }
+        return item;
+      });
+    } else {
+      cartArray.push(cartItem);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cartArray));
+  };
+
+  const renderItems = (data) => {
+    data.forEach(({ description, id, image, name, price }) => {
+      const card = document.createElement("div");
+
+      card.classList.add("card");
+      card.innerHTML = `
         <img
           src="${image}"
           alt="${name}"
@@ -43,25 +62,32 @@ const renderItems = (data) => {
         </div>
     `;
 
-    cardsMenu.append(card);
-  });
+      card.querySelector(".button-card-text").addEventListener("click", () => {
+        addToCart({ name, price, id, count: 1 });
+      });
+
+      cardsMenu.append(card);
+    });
+  };
+
+  if (localStorage.getItem("restaurant")) {
+    const restaurant = JSON.parse(localStorage.getItem("restaurant"));
+
+    changeTitle(restaurant);
+
+    fetch(
+      `https://delivery-3087b-default-rtdb.firebaseio.com/db/${restaurant.products}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        renderItems(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } else {
+    window.location.href = "/";
+  }
 };
 
-if (localStorage.getItem("restaurant")) {
-  const restaurant = JSON.parse(localStorage.getItem("restaurant"));
-
-  changeTitle(restaurant);
-
-  fetch(
-    `https://delivery-3087b-default-rtdb.firebaseio.com/db/${restaurant.products}`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      renderItems(data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-} else {
-  window.location.href = "/";
-}
+menu();

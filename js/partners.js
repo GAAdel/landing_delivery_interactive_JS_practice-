@@ -1,18 +1,19 @@
-const cardsRestaurants = document.querySelector(".cards-restaurants");
+const partners = () => {
+  const cardsRestaurants = document.querySelector(".cards-restaurants");
 
-const renderItems = (data) => {
-  data.forEach((item) => {
-    const { image, kitchen, name, price, products, stars, time_of_delivery } =
-      item;
-    const a = document.createElement("a");
+  const renderItems = (data) => {
+    data.forEach((item) => {
+      const { image, kitchen, name, price, products, stars, time_of_delivery } =
+        item;
+      const a = document.createElement("a");
 
-    a.setAttribute("href", "restaurant.html");
-    a.classList.add("card");
-    a.classList.add("card-restaurant");
+      a.setAttribute("href", "restaurant.html");
+      a.classList.add("card");
+      a.classList.add("card-restaurant");
 
-    a.dataset.products = products;
+      a.dataset.products = products;
 
-    a.innerHTML = `
+      a.innerHTML = `
       <img
         src="${image}"
         alt="${name}"
@@ -31,26 +32,29 @@ const renderItems = (data) => {
       </div>
     `;
 
-    a.addEventListener("click", (e) => {
-      e.preventDefault();
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
 
-      if (localStorage.getItem("user")) {
-        localStorage.setItem("restaurant", JSON.stringify(item));
-        window.location.href = "restaurant.html";
-      } else {
-        modalAuth.style.display = "flex";
-      }
+        if (localStorage.getItem("user")) {
+          localStorage.setItem("restaurant", JSON.stringify(item));
+          window.location.href = "restaurant.html";
+        } else {
+          modalAuth.style.display = "flex";
+        }
+      });
+
+      cardsRestaurants.append(a);
     });
+  };
 
-    cardsRestaurants.append(a);
-  });
+  fetch("https://delivery-3087b-default-rtdb.firebaseio.com/db/partners.json")
+    .then((response) => response.json())
+    .then((data) => {
+      renderItems(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
-fetch("https://delivery-3087b-default-rtdb.firebaseio.com/db/partners.json")
-  .then((response) => response.json())
-  .then((data) => {
-    renderItems(data);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+partners();

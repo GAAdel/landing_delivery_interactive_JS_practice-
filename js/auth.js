@@ -1,59 +1,68 @@
-const buttonAuth = document.querySelector(".button-auth");
-const modalAuth = document.querySelector(".modal-auth");
-const closeAuth = document.querySelector(".close-auth");
+const auth = () => {
+  const buttonAuth = document.querySelector(".button-auth");
+  const modalAuth = document.querySelector(".modal-auth");
+  const closeAuth = document.querySelector(".close-auth");
 
-const buttonOut = document.querySelector(".button-out");
-const userName = document.querySelector(".user-name");
+  const buttonOut = document.querySelector(".button-out");
+  const userName = document.querySelector(".user-name");
 
-const logInForm = document.getElementById("logInForm");
-const inputLogin = document.getElementById("login");
-const inputPassword = document.getElementById("password");
+  const logInForm = document.getElementById("logInForm");
+  const inputLogin = document.getElementById("login");
+  const inputPassword = document.getElementById("password");
 
-const login = (user) => {
-  buttonAuth.style.display = "none";
-  buttonOut.style.display = "flex";
-  userName.style.display = "flex";
-  userName.textContent = user.login;
-  modalAuth.style.display = "none";
-};
+  const buttonCart = document.querySelector(".button-cart");
 
-const logout = () => {
-  buttonAuth.style.display = "flex";
-  buttonOut.style.display = "none";
+  const login = (user) => {
+    buttonAuth.style.display = "none";
+    buttonOut.style.display = "flex";
+    userName.style.display = "flex";
+    userName.textContent = user.login;
+    modalAuth.style.display = "none";
+    buttonCart.style.display = "flex";
+  };
 
-  userName.style.display = "none";
-  userName.textContent = "";
+  const logout = () => {
+    buttonAuth.style.display = "flex";
+    buttonOut.style.display = "none";
 
-  localStorage.removeItem("user");
-};
+    userName.style.display = "none";
+    userName.textContent = "";
 
-buttonAuth.addEventListener("click", () => {
-  modalAuth.style.display = "flex";
-});
+    buttonCart.style.display = "none";
 
-closeAuth.addEventListener("click", () => {
-  modalAuth.style.display = "none";
-});
+    localStorage.removeItem("user");
+  };
 
-buttonOut.addEventListener("click", () => {
-  logout();
-});
+  buttonAuth.addEventListener("click", () => {
+    modalAuth.style.display = "flex";
+  });
 
-logInForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+  closeAuth.addEventListener("click", () => {
+    modalAuth.style.display = "none";
+  });
 
-  if (inputLogin.value.trim() != "" && inputPassword.value.trim() != "") {
-    const user = {
-      login: inputLogin.value,
-      password: inputPassword.value,
-    };
-    localStorage.setItem("user", JSON.stringify(user));
-    login(user);
-  } else {
-    return alert("Пароль или логин не введены!");
+  buttonOut.addEventListener("click", () => {
+    logout();
+  });
+
+  logInForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (inputLogin.value.trim() != "" && inputPassword.value.trim() != "") {
+      const user = {
+        login: inputLogin.value,
+        password: inputPassword.value,
+      };
+      localStorage.setItem("user", JSON.stringify(user));
+      login(user);
+    } else {
+      return alert("Пароль или логин не введены!");
+    }
+  });
+
+  if (localStorage.getItem("user")) {
+    login(JSON.parse(localStorage.getItem("user")));
   }
-});
+};
 
-if (localStorage.getItem("user")) {
-  login(JSON.parse(localStorage.getItem("user")));
-}
+auth();
