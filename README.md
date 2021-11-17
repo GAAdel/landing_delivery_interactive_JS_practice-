@@ -1,2 +1,6 @@
-# landing_delivery_interactive_JS_practice
-...In working...
+# Food ordering and delivery website
+
+***
+* The project is implemented on Vanilla JS.
+* It uses API Fetch, API Storage, Firebase.
+
