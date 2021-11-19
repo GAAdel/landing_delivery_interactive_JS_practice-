@@ -1,5 +1,6 @@
 const partners = () => {
   const cardsRestaurants = document.querySelector(".cards-restaurants");
+  const modalAuth = document.querySelector(".modal-auth");
 
   const renderItems = (data) => {
     data.forEach((item) => {
