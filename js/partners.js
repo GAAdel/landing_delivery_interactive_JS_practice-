@@ -20,7 +20,7 @@ const partners = () => {
         alt="${name}"
         class="card-image"
       />
-      <div class="card-text">
+      <div class="card-text"> 
         <div class="card-heading">
           <h3 class="card-title">${name}</h3>
           <span class="card-tag tag">${time_of_delivery} мин</span>
