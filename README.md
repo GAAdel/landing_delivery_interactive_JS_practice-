@@ -1,7 +1,7 @@
 
 # Food ordering and delivery website
 
-[Project](https://gaadel.github.io/landing_delivery_interactive_JS_practice/)
+[Project](https://cikadaweb.github.io/landing_delivery_interactive_JS_practice/)
 
 #### Website for ordering food of different cuisines
 * module of authorization
